@@ -18,8 +18,7 @@
 
 static void * kIGListAdapterKey = &kIGListAdapterKey;
 
-+ (void)load
-{
+__attribute__((constructor)) static void initialize_UICollectionViewLayout(void) {
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
         // interactive reordering does not exist prior to iOS 9
@@ -27,7 +26,7 @@ static void * kIGListAdapterKey = &kIGListAdapterKey;
             return;
         }
 
-        Class layoutClass = [self class];
+        Class layoutClass = [UICollectionViewLayout class];
 
         // override implementation for targetIndexPathForInteractivelyMovingItem:withPosition:
         SEL userMoveSelector = @selector(targetIndexPathForInteractivelyMovingItem:withPosition:);
